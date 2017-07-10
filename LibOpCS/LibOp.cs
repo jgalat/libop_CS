@@ -6,16 +6,6 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 //using Microsoft.Win32.SafeHandles;
 
-//using Option = System.IntPtr;
-//using PricingMethod = System.IntPtr;
-//using PMSettings = System.IntPtr;
-
-//using TimePeriod = System.IntPtr;
-
-//using Volatility = double;
-//using RiskFreeRate = double;
-//using Dividend = System.IntPtr;
-
 namespace LibOpCS
 {
   public class LibOp
@@ -37,7 +27,6 @@ namespace LibOpCS
       EU_EXERCISE,
       AM_EXERCISE
     };
-
 
     /**  
       * option.h 
