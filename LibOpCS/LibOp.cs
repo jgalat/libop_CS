@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
+//using Microsoft.Win32.SafeHandles;
 
 //using Option = System.IntPtr;
 //using PricingMethod = System.IntPtr;
@@ -18,35 +18,257 @@ using Microsoft.Win32.SafeHandles;
 
 namespace LibOpCS
 {
-    public class LibOp
+  public class LibOp
+  {
+    private const string LibOp_dll = "libop.dll";
+
+    /**
+      * option_data.h
+      */
+
+    public enum OptionType
     {
-        private const string LibOp_dll = "libop.dll";
+      OPTION_CALL,
+      OPTION_PUT
+    };
 
-        public enum OptionType
-        {
-            OPTION_CALL,
-            OPTION_PUT
-        };
-
-        public enum ExerciseType
-        {
-            EU_EXERCISE,
-            AM_EXERCISE
-        };
-
-        [DllImport(LibOp_dll, EntryPoint="new_option")]
-        public static extern 
-        IntPtr NewOption(OptionType ot,
-            ExerciseType et, IntPtr time_period, double strike);
-
-        [DllImport(LibOp_dll, EntryPoint = "delete_option")]
-        public static extern 
-        void DeleteOption(IntPtr option);
-
-        [DllImport(LibOp_dll, EntryPoint = "option_set_pricing_method")]
-        public static extern 
-        int OptionSetPricingMethod(IntPtr option, IntPtr pricing_method);
+    public enum ExerciseType
+    {
+      EU_EXERCISE,
+      AM_EXERCISE
+    };
 
 
+    /**  
+      * option.h 
+      */
+
+    [DllImport(LibOp_dll, EntryPoint = "new_option")]
+    public static extern
+    IntPtr NewOption(OptionType option_type,
+        ExerciseType exercise_type, IntPtr time_period, double strike);
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_option")]
+    public static extern
+    void DeleteOption(IntPtr option);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_set_pricing_method")]
+    public static extern
+    int OptionSetPricingMethod(IntPtr option, IntPtr pricing_method);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_price")]
+    public static extern
+    int OptionPrice(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_delta")]
+    public static extern
+    int OptionDelta(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_gamma")]
+    public static extern
+    int OptionGamma(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_theta")]
+    public static extern
+    int OptionTheta(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_rho")]
+    public static extern
+    int OptionRho(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_vega")]
+    public static extern
+    int OptionVega(IntPtr option, double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_impl_vol")]
+    public static extern
+    int OptionImpliedVolatility(IntPtr option, double V,
+                                double S, IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "option_price_and_greeks")]
+    public static extern
+    int OptionPriceAndGreeks(IntPtr option, double S, IntPtr result);
+
+    /**
+     * pricing_method.h 
+     */
+
+    public enum PricingMethodId {
+      EU_ANALYTIC,
+      AM_FD
+    };
+
+    [DllImport(LibOp_dll, EntryPoint = "new_pricing_method")]
+    public static extern
+    IntPtr NewPricingMethod(PricingMethodId id, double volatility,
+                            double risk_free_rate, IntPtr dividend);
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_pricing_method")]
+    public static extern
+    void DeletePricingMethod(IntPtr pricing_method);
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_pricing_method")]
+    public static extern
+    int PMSetSettings(IntPtr pricing_method, IntPtr PMSettings);
+
+    /**
+     * pm_settings.h
+     */
+
+    [DllImport(LibOp_dll, EntryPoint = "new_pm_settings")]
+    public static extern
+    IntPtr NewPMSettings();
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_pm_settings")]
+    public static extern
+    void DeletePMSettings(IntPtr pm_settings);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_grid_size")]
+    public static extern
+    int PMSettingsSetGridSize(IntPtr pm_settings, int grid_size);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_Smax")]
+    public static extern
+    int PMSettingsSetSMax(IntPtr pm_settings, double s_max);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_tol")]
+    public static extern
+    int PMSettingsSetTol(IntPtr pm_settings, double tol);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_abstol")]
+    public static extern
+    int PMSettingsSetAbsTol(IntPtr pm_settings, double abstol);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_iv_max_it")]
+    public static extern
+    int PMSettingsSetIVMaxIterations(IntPtr pm_settings, int max);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_iv_eps")]
+    public static extern
+    int PMSettingsSetIVTol(IntPtr pm_settings, double tol);
+
+    [DllImport(LibOp_dll, EntryPoint = "pm_settings_set_iv_init")]
+    public static extern
+    int PMSettingsSetIVInitialGuesses(IntPtr pm_settings,
+                                      double guess_vol0,
+                                      double guess_vol1);
+
+    /**
+     * time_period.h
+     */
+
+    [DllImport(LibOp_dll, EntryPoint = "new_time_period")]
+    public static extern
+    IntPtr NewTimePeriod(int days_per_year);
+
+    [DllImport(LibOp_dll, EntryPoint = "new_time_period_365d")]
+    public static extern
+    IntPtr NewTimePeriod365();
+
+    [DllImport(LibOp_dll, EntryPoint = "new_time_period_252d")]
+    public static extern
+    IntPtr NewTimePeriod252();
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_time_period")]
+    public static extern
+    IntPtr DeleteTimePeriod();
+
+    [DllImport(LibOp_dll, EntryPoint = "tp_set_days")]
+    public static extern
+    int TimePeriodSetDays(IntPtr time_period, int days);
+
+    [DllImport(LibOp_dll, EntryPoint = "tp_set_years")]
+    public static extern
+    int TimePeriodSetYears(IntPtr time_period, int years);
+
+    [DllImport(LibOp_dll, EntryPoint = "tp_get_date")]
+    public static extern
+    double TimePeriodGetDate(IntPtr time_period, int days);
+
+    public static
+    IntPtr DAYS(IntPtr time_period, int days)
+    {
+      TimePeriodSetDays(time_period, days);
+      return time_period;
     }
+
+    public static
+    IntPtr YEARS(IntPtr time_period, int years)
+    {
+      TimePeriodSetYears(time_period, years);
+      return time_period;
+    }
+
+    /**
+     * dividend.h
+     */
+
+    [DllImport(LibOp_dll, EntryPoint = "new_continuous_dividend")]
+    public static extern
+    IntPtr NewContinuousDividend(double cont_dividend);
+
+    [DllImport(LibOp_dll, EntryPoint = "new_discrete_dividend")]
+    public static extern
+    IntPtr NewContinuousDividend();
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_dividend")]
+    public static extern
+    void DeleteDividend(IntPtr dividend);
+
+    // Variadic functions
+    // Argument "size" must be the length of the __arglist
+    // Examples: 
+    //  1) DisDivSetDates(div, tp, 1, __arglist(182));
+    //  2) DiscDivSetAmmounts(div, 2, __arglist(1, 2));
+    
+    [DllImport(LibOp_dll, EntryPoint = "div_disc_set_dates")]
+    public static extern
+    void DiscDivSetDates(IntPtr dividend, IntPtr time_period, 
+                          int size, __arglist);
+
+    [DllImport(LibOp_dll, EntryPoint = "div_disc_set_ammounts")]
+    public static extern
+    void DiscDivSetAmmounts(IntPtr dividend, int size, __arglist);
+
+    /**
+     * result.h
+     */
+
+    [DllImport(LibOp_dll, EntryPoint = "new_result")]
+    public static extern
+    IntPtr NewResult();
+
+    [DllImport(LibOp_dll, EntryPoint = "delete_result")]
+    public static extern
+    void DeleteResult(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_price")]
+    public static extern
+    double ResultGetPrice(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_delta")]
+    public static extern
+    double ResultGetDelta(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_gamma")]
+    public static extern
+    double ResultGetGamma(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_theta")]
+    public static extern
+    double ResultGetTheta(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_rho")]
+    public static extern
+    double ResultGetRho(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_vega")]
+    public static extern
+    double ResultGetVega(IntPtr result);
+
+    [DllImport(LibOp_dll, EntryPoint = "result_get_impl_vol")]
+    public static extern
+    double ResultGetImpliedVolatility(IntPtr result);
+
+  }
 }
