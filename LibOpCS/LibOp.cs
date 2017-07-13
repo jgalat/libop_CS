@@ -49,6 +49,16 @@ namespace LibOpCS
     public static extern
     int OptionPrice(IntPtr option, double S, IntPtr result);
 
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "option_prices")]
+    private static extern
+    int OptionPrices_(IntPtr option, int size, double[] S, IntPtr result);
+
+    public static
+    int OptionPrices(IntPtr option, double[] S, IntPtr result)
+    {
+      return OptionPrices_(option, S.Length, S, result);
+    }
+
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "option_delta")]
     public static extern
     int OptionDelta(IntPtr option, double S, IntPtr result);
@@ -229,6 +239,10 @@ namespace LibOpCS
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_price")]
     public static extern
     double ResultGetPrice(IntPtr result);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_prices")]
+    public static extern
+    double[] ResultGetPrices(IntPtr result);
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_delta")]
     public static extern
