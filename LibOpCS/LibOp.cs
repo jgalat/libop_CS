@@ -215,15 +215,26 @@ namespace LibOpCS
     void DeleteDividend(IntPtr dividend);
     
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "div_disc_set_dates_")]
-    public static extern
-    int DiscDivSetDates(IntPtr dividend, IntPtr time_period, 
+    private static extern
+    int DiscDivSetDates_(IntPtr dividend, IntPtr time_period, 
                         int size, int[] dates);
 
+    public static
+    int DiscDivSetDates(IntPtr dividend, IntPtr time_period, int[] dates)
+    {
+      return DiscDivSetDates_(dividend, time_period, dates.Length, dates);
+    }
+
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "div_disc_set_ammounts_")]
-    public static extern
-    int DiscDivSetAmmounts(IntPtr dividend, int size, 
+    private static extern
+    int DiscDivSetAmmounts_(IntPtr dividend, int size, 
                             double[] ammounts);
 
+    public static
+    int DiscDivSetAmmounts(IntPtr dividend, double[] ammounts)
+    {
+      return DiscDivSetAmmounts_(dividend, ammounts.Length, ammounts);
+    }
     /**
      * result.h
      */

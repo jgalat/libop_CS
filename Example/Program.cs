@@ -19,17 +19,17 @@ namespace Example
       double S = 21.0, K = 20.0;
       double vol = 0.4;
       double r = 0.09;
-      IntPtr div = LibOp.NewContinuousDividend(0.1);
-      //IntPtr div = LibOp.NewDiscreteDividend();
+      //IntPtr div = LibOp.NewContinuousDividend(0.1);
+      IntPtr div = LibOp.NewDiscreteDividend();
 
       if (div.Equals(IntPtr.Zero))
         Console.WriteLine("div failed");
 
-      //int[] dates = { 182 };
-      //double[] ammounts = { 1 };
+      int[] dates = { 182 };
+      double[] ammounts = { 1 };
 
-      //LibOp.DiscDivSetDates(div, TP, 1, dates);
-      //LibOp.DiscDivSetAmmounts(div, 1, ammounts);
+      LibOp.DiscDivSetDates(div, TP, dates);
+      LibOp.DiscDivSetAmmounts(div, ammounts);
 
       IntPtr EuOption =
         LibOp.NewOption(LibOp.OptionType.OPTION_CALL,
