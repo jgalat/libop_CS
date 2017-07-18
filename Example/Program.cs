@@ -17,19 +17,19 @@ namespace Example
         Console.WriteLine("TP Failed");
 
       double S = 21.0, K = 20.0;
-      double vol = 0.4;
-      double r = 0.09;
-      //IntPtr div = LibOp.NewContinuousDividend(0.1);
-      IntPtr div = LibOp.NewDiscreteDividend();
+      IntPtr vol = LibOp.NewVolatility(0.4);
+      IntPtr r = LibOp.NewRiskFreeRate(0.09);
+      IntPtr div = LibOp.NewContinuousDividend(0.1);
+      //IntPtr div = LibOp.NewDiscreteDividend();
 
       if (div.Equals(IntPtr.Zero))
         Console.WriteLine("div failed");
 
-      int[] dates = { 182 };
-      double[] ammounts = { 1 };
+      //int[] dates = { 182 };
+      //double[] ammounts = { 1 };
 
-      LibOp.DiscDivSetDates(div, TP, dates);
-      LibOp.DiscDivSetAmmounts(div, ammounts);
+      //LibOp.DiscDivSetDates(div, TP, dates);
+      //LibOp.DiscDivSetAmmounts(div, ammounts);
 
       IntPtr EuOption =
         LibOp.NewOption(LibOp.OptionType.OPTION_CALL,
@@ -54,7 +54,14 @@ namespace Example
         Console.WriteLine("result failed");
 
       if (LibOp.OptionPrice(EuOption, S, result) < 0)
-        Console.WriteLine("option price failed");
+        Console.WriteLine("option price failed1");
+
+      Console.WriteLine(LibOp.ResultGetPrice(result));
+
+      LibOp.VolatilitySetValue(vol, 0.35);
+
+      if (LibOp.OptionPrice(EuOption, S, result) < 0)
+        Console.WriteLine("option price failed2");
 
       Console.WriteLine(LibOp.ResultGetPrice(result));
 

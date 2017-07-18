@@ -89,6 +89,46 @@ namespace LibOpCS
     int OptionPriceAndGreeks(IntPtr option, double S, IntPtr result);
 
     /**
+     * volatility.h
+     */
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_volatility")]
+    public static extern
+    IntPtr NewVolatility(double volatility);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_volatility")]
+    public static extern
+    void DeleteVolatility(IntPtr volatility);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vol_set_value")]
+    public static extern
+    int VolatilitySetValue(IntPtr volatility, double value);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vol_get_value")]
+    public static extern
+    double VolatilityGetValue(IntPtr volatility);
+
+    /**
+     * risk_free_rate.h
+     */
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_risk_free_rate")]
+    public static extern
+    IntPtr NewRiskFreeRate(double risk_free_rate);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_risk_free_rate")]
+    public static extern
+    void DeleteRiskFreeRate(IntPtr risk_free_rate);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "rfr_set_value")]
+    public static extern
+    int RiskFreeRateSetValue(IntPtr risk_free_rate, double value);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "rfr_get_value")]
+    public static extern
+    double RiskFreeRateGetValue(IntPtr risk_free_rate);
+
+    /**
      * pricing_method.h 
      */
 
@@ -99,8 +139,8 @@ namespace LibOpCS
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_pricing_method")]
     public static extern
-    IntPtr NewPricingMethod(PricingMethodId id, double volatility,
-                            double risk_free_rate, IntPtr dividend);
+    IntPtr NewPricingMethod(PricingMethodId id, IntPtr volatility,
+                            IntPtr risk_free_rate, IntPtr dividend);
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_pricing_method")]
     public static extern
