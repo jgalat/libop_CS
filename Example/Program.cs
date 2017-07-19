@@ -65,6 +65,15 @@ namespace Example
 
       Console.WriteLine(LibOp.ResultGetPrice(result));
 
+      /* Free the structs (beacause C) */
+      LibOp.DeleteVolatility(vol);
+      LibOp.DeleteRiskFreeRate(r);
+      LibOp.DeleteDividend(div);
+      LibOp.DeleteTimePeriod(TP);
+      LibOp.DeletePricingMethod(EuAnalytic);
+      LibOp.DeleteOption(EuOption);
+      LibOp.DeleteResult(result);
+
       Console.ReadLine();
     }
   }

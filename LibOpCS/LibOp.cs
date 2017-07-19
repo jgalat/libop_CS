@@ -49,6 +49,10 @@ namespace LibOpCS
     public static extern
     int OptionPrice(IntPtr option, double S, IntPtr result);
 
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "option_price_precision")]
+    public static extern
+    int OptionPricePrecision(IntPtr option, double V, double S, IntPtr result);
+
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "option_prices")]
     private static extern
     int OptionPrices_(IntPtr option, int size, double[] S, IntPtr result);
@@ -134,7 +138,8 @@ namespace LibOpCS
 
     public enum PricingMethodId {
       EU_ANALYTIC, /* European Analytic */
-      AM_FD_UG /* American Finite Difference using a uniform grid */
+      AM_FD_UG, /* American Finite Difference using a uniform grid */
+      AM_FD_NUG /* American Finite Difference using a non-uniform grid */
     };
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_pricing_method")]
@@ -210,7 +215,7 @@ namespace LibOpCS
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_time_period")]
     public static extern
-    IntPtr DeleteTimePeriod();
+    IntPtr DeleteTimePeriod(IntPtr time_period);
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "tp_set_days")]
     public static extern
@@ -290,6 +295,10 @@ namespace LibOpCS
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_price")]
     public static extern
     double ResultGetPrice(IntPtr result);
+
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_price_precision")]
+    public static extern
+    double ResultGetPricePricePrecision(IntPtr result);
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_prices")]
     public static extern
