@@ -133,8 +133,8 @@ namespace LibOpCS
      */
 
     public enum PricingMethodId {
-      EU_ANALYTIC,
-      AM_FD
+      EU_ANALYTIC, /* European Analytic */
+      AM_FD_UG /* American Finite Difference using a uniform grid */
     };
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_pricing_method")]
