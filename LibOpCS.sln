@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibOpCS", "LibOpCS\LibOpCS.csproj", "{C953ACD2-3210-4E4A-810A-CDFC92585723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmCallContDivOption", "Example\AmCallContDivOption.csproj", "{8B578032-1EAD-4E91-89C4-7F4751874454}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmCallContDivOption", "AmCallContDivOption\AmCallContDivOption.csproj", "{8B578032-1EAD-4E91-89C4-7F4751874454}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmCallDiscDivOption", "AmCallDiscDivOption\AmCallDiscDivOption.csproj", "{AA9D7CE6-9E08-4FE0-94D5-66B6F436BE38}"
 EndProject
