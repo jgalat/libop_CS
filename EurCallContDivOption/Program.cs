@@ -7,33 +7,32 @@ using System.Threading;
 using LibOpCS;
 
 /**
- * Opción call americana con precio de strike $100 y tiempo a la expiración de 182 días.
- * Posee un dividendo continuo del 10%, volatilidad de 25% y una tasa libre de
- * riesgo de 10%.
- * Se calcula el precio de la opción para un precio de subyacente de $100.
+ * Opción call europea con precio de strike $20 y tiempo a la expiración de un año.
+ * Posee un dividendo continuo del 10%, volatilidad de 40% y una tasa libre de
+ * riesgo de 9%.
+ * Se calcula el precio de la opción para un precio de subyacente de $21.
  */
 
-namespace AmCallContDivOption
+namespace EurCallContDivOption
 {
   class Program
   {
     static void Main(string[] args)
     {
-      double  underlying = 100,
-              strike = 100;
-      IntPtr sigma = LibOp.NewVolatility(0.25);
-      IntPtr r = LibOp.NewRiskFreeRate(0.1);
+      double  underlying = 21,
+              strike = 20;
+      IntPtr sigma = LibOp.NewVolatility(0.4);
+      IntPtr r = LibOp.NewRiskFreeRate(0.09);
       IntPtr d = LibOp.NewContinuousDividend(0.1);
 
       IntPtr tp = LibOp.NewTimePeriod365();
 
-      IntPtr opt = LibOp.NewOption(LibOp.OptionType.OPTION_CALL, 
-                              LibOp.ExerciseType.AM_EXERCISE,
-                              LibOp.DAYS(tp, 182), 
-                              strike);
+      IntPtr opt = LibOp.NewOption(LibOp.OptionType.OPTION_CALL,
+                                  LibOp.ExerciseType.EU_EXERCISE,
+                                  LibOp.DAYS(tp, 365),
+                                  strike);
 
-      /* Se usan diferencias finitas con una grilla no uniforme (AM_FD_NUG) */
-      IntPtr pm = LibOp.NewPricingMethod(LibOp.PricingMethodId.AM_FD_NUG, sigma, r, d);
+      IntPtr pm = LibOp.NewPricingMethod(LibOp.PricingMethodId.EU_ANALYTIC, sigma, r, d);
 
       LibOp.OptionSetPricingMethod(opt, pm);
 

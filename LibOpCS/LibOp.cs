@@ -151,7 +151,7 @@ namespace LibOpCS
     public static extern
     void DeletePricingMethod(IntPtr pricing_method);
 
-    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_pricing_method")]
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "pm_set_settings")]
     public static extern
     int PMSetSettings(IntPtr pricing_method, IntPtr PMSettings);
 
