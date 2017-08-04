@@ -42,6 +42,8 @@ namespace AmPutGridSize
 
       /* Establecemos una grilla de 300 puntos */
       LibOp.PMSettingsSetGridSize(pms, 300);
+      /* Establecemos una tolerancia de 10^-12 */
+      LibOp.PMSettingsSetTol(pms, 1e-12);
       LibOp.PMSetSettings(pm, pms);
 
       IntPtr result = LibOp.NewResult();

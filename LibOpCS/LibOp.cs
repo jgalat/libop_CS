@@ -298,11 +298,20 @@ namespace LibOpCS
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_price_precision")]
     public static extern
-    double ResultGetPricePricePrecision(IntPtr result);
+    double ResultGetPricePrecision(IntPtr result);
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_prices")]
-    public static extern
-    double[] ResultGetPrices(IntPtr result);
+    private static extern
+    IntPtr ResultGetPrices_(IntPtr result);
+
+    public static
+    double[] ResultGetPrices(IntPtr result, int size)
+    {
+      IntPtr ptr = ResultGetPrices_(result);
+      double[] res = new double[size];
+      Marshal.Copy(ptr, res, 0, size);
+      return res;
+    }
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "result_get_delta")]
     public static extern
