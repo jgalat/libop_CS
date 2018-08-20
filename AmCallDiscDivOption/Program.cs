@@ -32,10 +32,10 @@ namespace AmCallDiscDivOption
       IntPtr tp = LibOp.NewTimePeriod252();
 
       int[] dates = { 50, 200 };
-      double[] ammounts = { 10, 15 };
+      double[] amounts = { 10, 15 };
 
       LibOp.DiscDivSetDates(d, tp, dates);
-      LibOp.DiscDivSetAmmounts(d, ammounts);
+      LibOp.DiscDivSetamounts(d, amounts);
 
       IntPtr opt = LibOp.NewOption(LibOp.OptionType.OPTION_CALL,
                               LibOp.ExerciseType.AM_EXERCISE,

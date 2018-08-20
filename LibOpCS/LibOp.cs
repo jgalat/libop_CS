@@ -28,8 +28,8 @@ namespace LibOpCS
       AM_EXERCISE
     };
 
-    /**  
-      * option.h 
+    /**
+      * option.h
       */
 
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "new_option")]
@@ -133,7 +133,7 @@ namespace LibOpCS
     double RiskFreeRateGetValue(IntPtr risk_free_rate);
 
     /**
-     * pricing_method.h 
+     * pricing_method.h
      */
 
     public enum PricingMethodId {
@@ -258,10 +258,10 @@ namespace LibOpCS
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "delete_dividend")]
     public static extern
     void DeleteDividend(IntPtr dividend);
-    
+
     [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "div_disc_set_dates_")]
     private static extern
-    int DiscDivSetDates_(IntPtr dividend, IntPtr time_period, 
+    int DiscDivSetDates_(IntPtr dividend, IntPtr time_period,
                         int size, int[] dates);
 
     public static
@@ -270,15 +270,15 @@ namespace LibOpCS
       return DiscDivSetDates_(dividend, time_period, dates.Length, dates);
     }
 
-    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "div_disc_set_ammounts_")]
+    [DllImport(LibOp_dll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "div_disc_set_amounts_")]
     private static extern
-    int DiscDivSetAmmounts_(IntPtr dividend, int size, 
-                            double[] ammounts);
+    int DiscDivSetamounts_(IntPtr dividend, int size,
+                            double[] amounts);
 
     public static
-    int DiscDivSetAmmounts(IntPtr dividend, double[] ammounts)
+    int DiscDivSetamounts(IntPtr dividend, double[] amounts)
     {
-      return DiscDivSetAmmounts_(dividend, ammounts.Length, ammounts);
+      return DiscDivSetamounts_(dividend, amounts.Length, amounts);
     }
     /**
      * result.h
